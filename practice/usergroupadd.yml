@@ -1,0 +1,17 @@
+---
+- name: User addition play
+  hosts: dev
+  become: true
+  vars:
+    - group_name: unixadmin
+    - user_name: joe
+  tasks:
+    - name: Useradd
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        state: present
+    - name: groupadd
+      ansible.builtin.group:
+        name: "{{ group_name}}"
+        state: present
+
