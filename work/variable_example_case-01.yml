@@ -1,0 +1,30 @@
+---
+
+- name: Group and User creation
+  hosts: dev
+  vars: 
+    - group_name_unix: unixadmin
+    - group_name_middleware: middleware
+    - user_name_unix: john2
+    - user_name_middleware: joe2
+    - pass_var: redhat123
+  tasks:
+    - name: Group create - unixadmin
+      ansible.builtin.group:
+        name: "{{ group_name_unix }}"
+        state: present
+
+    - name: Group create - middleware
+      ansible.builtin.groups:
+        name: "{{ group_name_middleware }}"
+        state: present
+
+    - name: User Create - john2
+      ansible.builtin.user:
+        name: "{{ user_name_unix }}"
+        group: "{{ group_name_unix }}"
+        groups: "{{  group_name_middleware }}"
+        state: present
+        password: "{{ pass_var | password_hash( sha512 ) }}"
+
+    -

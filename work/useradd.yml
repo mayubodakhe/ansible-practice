@@ -1,0 +1,30 @@
+---
+- name: To create users 
+  hosts: serverb.lab.example.com
+  become: false
+  vars:
+    - username: joe
+    - password: redhat
+    - group: unix
+    - username1: back
+    - password1: redhat123
+    - group2: dba
+    - gid: 321
+  tasks:
+    - name: To create users
+      ansible.builtin.user:
+        name: "{{ username }}"
+        password: "{{ password }}"
+        state: present
+          
+    - name: To create another users
+      ansible.builtin.user:
+        name: "{{ username1 }}"
+        password: "{{ password1 }}"
+        state: present
+
+    - name: To create group
+      ansible.builtin.group:
+        name: "{{ group }}"
+        groupid: "{{ gid }}"
+        state: present

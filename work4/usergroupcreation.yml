@@ -1,0 +1,26 @@
+---
+
+- name: User and group creation
+  hosts: all
+  tasks:
+    - name: 
+    - name: Groups creation
+      vars: 
+        - group_lists:
+            - unixadmin
+            - wintel
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ group_lists}}"
+
+    - name: User creation
+      ansible.builtin.user:
+        name: "{{ item.user_name }}"
+        group: "{{ item.group_name }}"
+        passwd: "{{ item.passwd }}"
+        state: present
+      loop:
+        - { user_name: joe1, group_name: unixadmin, passwd: redhat123}
+        - { user_name: joe2, group_name: wintel, passwd: redhat123} 
+
